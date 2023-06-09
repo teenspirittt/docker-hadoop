@@ -14,13 +14,11 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 ENV HADOOP_HOME=/opt/hadoop-3.3.1
 ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
 
-# cpy conf files
-COPY core-site.xml $HADOOP_HOME/etc/hadoop/core-site.xml
-COPY hdfs-site.xml $HADOOP_HOME/etc/hadoop/hdfs-site.xml
-
-EXPOSE 9870 9864 9866 9867 9868 9869 9871 9872
+# copy setup script
+COPY setup-hadoop.sh /opt/setup-hadoop.sh
+RUN chmod +x /opt/setup-hadoop.sh
 
 # start hadoop, namenode and DataNode
-CMD ["hdfs", "namenode"]
-CMD ["hdfs", "datanode"]
+CMD ["/opt/setup-hadoop.sh"]
+
 
