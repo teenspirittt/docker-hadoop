@@ -1,0 +1,46 @@
+version: '3'
+services:
+  namenode:
+    build:
+      context: ./namenode
+      dockerfile: Dockerfile
+    volumes:
+      - ./conf:/opt/hadoop-3.3.1/etc/hadoop
+    ports:
+      - "9870:9870"
+    networks:
+      - hadoop-net
+
+  datanode:
+    build:
+      context: ./datanode
+      dockerfile: Dockerfile
+    volumes:
+      - ./conf:/opt/hadoop-3.3.1/etc/hadoop
+    ports:
+      - "9864:9864"
+    networks:
+      - hadoop-net
+
+  resourcemanager:
+    build:
+      context: ./resourcemanager
+      dockerfile: Dockerfile
+    volumes:
+      - ./conf:/opt/hadoop-3.3.1/etc/hadoop
+    ports:
+      - "8088:8088"
+    networks:
+      - hadoop-net
+
+  nodemanager:
+    build:
+      context: ./nodemanager
+      dockerfile: Dockerfile
+    volumes:
+      - ./conf:/opt/hadoop-3.3.1/etc/hadoop
+    networks:
+      - hadoop-net
+
+networks:
+  hadoop-net:
