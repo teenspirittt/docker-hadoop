@@ -1,32 +1,31 @@
-FROM debian:latest
+FROM debian:10
 
-# Установка Java и других зависимостей
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk-headless && \
+    apt-get install -y --no-install-recommends openjdk-11-jdk && \
+    apt-get install -y curl && \
     apt-get clean
 
-# Установка Hadoop
-RUN apt-get update && \
-    apt-get install -y wget && \
-    wget https://downloads.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz && \
-    tar -xzf hadoop-3.3.1.tar.gz -C /opt/ && \
-    rm hadoop-3.3.1.tar.gz && \
-    mkdir -p /opt/hadoop-3.3.1/data/datanode && \
-    chmod +x /opt/hadoop-3.3.1/start-datanode.sh
+ENV HADOOP_VERSION 3.3.1
+ENV HADOOP_URL https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
-# Копирование конфигурационных файлов
-COPY conf/core-site.xml /opt/hadoop-3.3.1/etc/hadoop/core-site.xml
-COPY conf/hdfs-site.xml /opt/hadoop-3.3.1/etc/hadoop/hdfs-site.xml
+RUN set -x \
+    && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
+    && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
+    && rm /tmp/hadoop.tar.gz*
 
-# Настройка переменных среды
-ENV HADOOP_HOME=/opt/hadoop-3.3.1
+RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
+
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
+ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV HADOOP_CONF_DIR=/etc/hadoop
 ENV PATH=$PATH:$HADOOP_HOME/bin
 
-# Открываем порт для обмена данными между Datanode и Namenode
 EXPOSE 9864
 
-# Установка рабочей директории
 WORKDIR $HADOOP_HOME
 
-# Запуск Datanode
-CMD ["./start-datanode.sh"]
+COPY run.sh /run.sh
+
+RUN chmod +x /run.sh
+
+ENTRYPOINT ["/bin/bash", "/run.sh"]
