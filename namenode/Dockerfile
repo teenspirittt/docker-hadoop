@@ -29,7 +29,6 @@ EXPOSE 9870 9000
 WORKDIR $HADOOP_HOME
 
 COPY run.sh /run.sh
-COPY conf/core-site.xml /etc/hadoop
 
 RUN chmod +x /run.sh
 
