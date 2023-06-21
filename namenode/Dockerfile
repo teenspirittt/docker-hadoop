@@ -13,6 +13,8 @@ RUN set -x \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
 
+RUN apt-get install -y nginx
+
 RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
 
 RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
@@ -25,7 +27,7 @@ ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV HADOOP_CONF_DIR=/etc/hadoop
 ENV PATH=$PATH:$HADOOP_HOME/bin
 
-EXPOSE 9870 9000
+EXPOSE 9870 9000 80
 
 WORKDIR $HADOOP_HOME
 

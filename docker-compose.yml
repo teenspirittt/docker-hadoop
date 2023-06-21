@@ -6,13 +6,12 @@ services:
       - ./conf:/opt/hadoop-3.3.1/etc/hadoop
     ports:
       - "9870:9870"
+      - "9000:9000"
+      - "80:80"
     networks:
       - hadoop-net
-
   datanode:
-    build:
-      context: ./datanode
-      dockerfile: Dockerfile
+    build: ./datanode
     volumes:
       - ./conf:/opt/hadoop-3.3.1/etc/hadoop
     ports:
