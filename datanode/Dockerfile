@@ -15,6 +15,8 @@ RUN set -x \
 
 RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
 
+RUN mkdir -p /opt/hadoop-$HADOOP_VERSION/hdfs/datanode
+
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV HADOOP_CONF_DIR=/etc/hadoop
