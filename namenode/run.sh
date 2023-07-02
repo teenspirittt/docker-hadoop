@@ -10,7 +10,7 @@ if [ -z "$HADOOP_CONF_DIR" ]; then
   exit 1
 fi
 
-$HADOOP_HOME/bin/hdfs namenode -format
+$HADOOP_HOME/bin/hdfs namenode  -format
 
 $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode
 

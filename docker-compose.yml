@@ -20,12 +20,22 @@ services:
     networks:
       - hadoop-net
 
+  #nodemanager:
+  #  build: ./datanode
+  #  volumes:
+  #    - ./conf:/opt/hadoop-3.3.1/etc/hadoop
+  #  ports:
+  #    - "9864:9864"
+  #  networks:
+  #    - hadoop-net
+
+
   spark:
     build: ./spark
-    volumes:
-      - ./conf/spark:/spark/conf
+    #volumes:
+     # - ./conf/spark:/spark/conf
     ports:
-      - "8088:8088"
+      - "4040:4040"
     networks:
       - hadoop-net
 

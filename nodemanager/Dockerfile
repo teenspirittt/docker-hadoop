@@ -13,11 +13,12 @@ RUN set -x \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
 
+
 RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
 
 RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
 
-RUN mkdir -p /opt/hadoop-$HADOOP_VERSION/hdfs/nodemanager
+RUN mkdir -p /opt/hadoop-$HADOOP_VERSION/hdfs/namenode
 RUN mkdir /hadoop-data
 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
