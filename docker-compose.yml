@@ -20,24 +20,46 @@ services:
     networks:
       - hadoop-net
 
-  #nodemanager:
-  #  build: ./datanode
-  #  volumes:
-  #    - ./conf:/opt/hadoop-3.3.1/etc/hadoop
-  #  ports:
-  #    - "9864:9864"
-  #  networks:
-  #    - hadoop-net
-
-
   spark:
-    build: ./spark
-    #volumes:
-     # - ./conf/spark:/spark/conf
+    image: apache/spark:latest
+    volumes:
+      - ./conf/spark:/spark/conf
     ports:
       - "4040:4040"
     networks:
       - hadoop-net
+  
+  spark-master:
+    image: bde2020/spark-master:3.0.1-hadoop3.2
+    container_name: spark-master
+    hostname: sparkmaster
+    networks:
+      - hadoop-net
+   # volumes:
+     # - D:/PROJECTS/hadoopspark:/opt/hadoopspark
+    ports:
+      - "8090:8080"
+      - "7077:7077"
+  
+  spark-worker-1:
+    image: bde2020/spark-worker:3.0.1-hadoop3.2
+    container_name: spark-worker-1
+    networks:
+      - hadoop-net
+    ports:
+      - "8081:8081"
+    environment:
+      - SPARK_MASTER=sparkmaster:7077
+  
+  spark-worker-2:
+    image: bde2020/spark-worker:3.0.1-hadoop3.2
+    container_name: spark-worker-2
+    networks:
+      - hadoop-net
+    ports:
+      - "8082:8081"
+    environment:
+      - SPARK_MASTER=sparkmaster:7077
 
 networks:
   hadoop-net:
