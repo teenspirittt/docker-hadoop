@@ -49,7 +49,7 @@ services:
     environment:
       - SPARK_MASTER=sparkmaster:7077
 
- spark-worker-2:
+  spark-worker-2:
     image: bde2020/spark-worker:3.0.1-hadoop3.2
     container_name: spark-worker-2
     networks:
