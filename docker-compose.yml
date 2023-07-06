@@ -20,15 +20,6 @@ services:
     networks:
       - hadoop-net
 
-  spark:
-    image: apache/spark:latest
-    volumes:
-      - ./conf/spark:/spark/conf
-    ports:
-      - "4040:4040"
-    networks:
-      - hadoop-net
-
   spark-master:
     image: bde2020/spark-master:3.0.1-hadoop3.2
     container_name: spark-master
