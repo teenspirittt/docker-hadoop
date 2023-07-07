@@ -38,7 +38,7 @@ services:
     image: bde2020/spark-worker:3.0.1-hadoop3.2
     container_name: spark-worker-1
     depends_on:
-      - sparkmaster
+      - spark-master
     networks:
       - hadoop-net
     ports:
@@ -50,7 +50,7 @@ services:
     image: bde2020/spark-worker:3.0.1-hadoop3.2
     container_name: spark-worker-2
     depends_on:
-      - sparkmaster
+      - spark-master
     networks:
       - hadoop-net
     ports:
