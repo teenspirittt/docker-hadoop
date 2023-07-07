@@ -30,6 +30,8 @@ services:
     hostname: sparkmaster
     networks:
       - hadoop-net
+    volumes:
+      - ../src/spark:/opt/spark
     ports:
       - "8090:8080"
       - "7077:7077"
