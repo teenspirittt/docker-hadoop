@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:11
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends openjdk-11-jdk && \
@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get clean
 
 ENV HADOOP_VERSION=3.3.1
-ENV HADOOP_URL=https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+ENV HADOOP_URL=https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 RUN set -x \
     && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
